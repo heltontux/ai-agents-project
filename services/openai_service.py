@@ -9,7 +9,7 @@ class OpenAIService:
     def __init__(self):
         self.client = OpenAI(api_key=OPENAI_API_KEY)
 
-    def ask(self, prompt: str):
+    def generate_text(self, prompt: str):
         try:
             response = self.client.responses.create(
             model=OPENAI_MODEL,
