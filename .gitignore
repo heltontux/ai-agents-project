@@ -11,3 +11,4 @@ wheels/
 
 # Criado manualmente
 criarDiretorios.sh
+.env
