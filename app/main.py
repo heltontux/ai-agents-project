@@ -1,10 +1,14 @@
-from services.openai_service import OpenAIService
+#from services.openai_service import OpenAIService
+from agents.simple_agent import SimpleAgent
 
-service = OpenAIService()
+agent = SimpleAgent()
 
-resposta = service.generate(
+while True:
+    prompt = input("Eu: ")
+    if prompt.lower() == "sair":
+        break
+    resposta = agent.run(prompt)
 
-    "Responda apenas: Olá, Projeto AI Agents!"
-)
-
-print(resposta)
+    print()
+    print("TuxBot: ", resposta)
+    print()
