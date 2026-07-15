@@ -1,9 +1,14 @@
 from openai import OpenAI
+from tools.registry import ToolRegistry
+from tools.datetime_tool import DateTimeTool
 
 from config.settings import (
         OPENAI_API_KEY,
         OPENAI_MODEL,
     )
+
+registry = ToolRegistry()
+registry.register(DateTimeTool())
 
 class OpenAIService:
     def __init__(self):
@@ -11,12 +16,14 @@ class OpenAIService:
 
     def generate(self, prompt: str):
         try:
+            tools=registry.schemas()
             response = self.client.responses.create(
-            model=OPENAI_MODEL,
-            input=prompt,
+                model=OPENAI_MODEL,
+                input=prompt,
+                tools=tools,
         )
 
-            return response.output_text
+            return response
 
         except Exception as e:
 
