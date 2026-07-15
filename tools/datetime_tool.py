@@ -11,7 +11,12 @@ class DateTimeTool(BaseTool):
     def description(self):
         return "Retorna a data e hora atual."
 
+    @property
+    def schema(self):
+        pass
+
     def execute(self, **kwargs):
         return datetime.now().strftime(
             "%d/%m/%Y %H:%M:%S"
         )
+    

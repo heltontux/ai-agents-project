@@ -14,3 +14,9 @@ class ToolRegistry:
     
     def all(self):
         return self._tools.values()
+    
+    def schemas(self):
+        return [
+            tool.schema()
+            for tool in self._tools.values()
+        ]

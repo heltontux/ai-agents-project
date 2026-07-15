@@ -19,5 +19,9 @@ class BaseTool(ABC):
         pass
 
     @abstractmethod
+    def schema(self):
+        pass
+
+    @abstractmethod
     def execute(self, **kwargs):
         pass
