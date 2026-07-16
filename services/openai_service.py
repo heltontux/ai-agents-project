@@ -22,11 +22,26 @@ class OpenAIService:
                 input=prompt,
                 tools=tools,
         )
-
             return response
-
         except Exception as e:
-
             raise RuntimeError(
                 f"Erro ao consultar OpenAI:{e}"
             )
+        
+    def submit_tool_result(
+            self,
+            previous_response_id: str,
+            call_id: str,
+            output: str,
+        ):
+        return self.client.responses.create(
+            model=OPENAI_MODEL,
+            previous_response_id=previous_response_id,
+            input=[
+                {
+                    "type": "function_call_output",
+                    "call_id": call_id,
+                    "output": output,
+                }
+            ],
+        )

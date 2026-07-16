@@ -9,5 +9,5 @@ while True:
     response = agent.run(prompt)
 
     print()
-    print("TuxBot", type(response))
-    print(response.output)
+    print("TuxBot: ",response)
+    print()
