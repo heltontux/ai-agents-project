@@ -16,5 +16,5 @@ while True:
     response = agent.run(prompt)
 
     print()
-    print("TuxBot: ",response)
+    print("TuxBot: ",response.text)
     print()

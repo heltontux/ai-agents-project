@@ -1,7 +1,11 @@
+import json
+
 from openai import OpenAI
 from tools.registry import ToolRegistry
 from tools.datetime_tool import DateTimeTool
 from core.base_llm import BaseLLM
+from core.llm_response import LLMResponse
+from core.llm_response import ToolCall
 
 from config.settings import (
         OPENAI_API_KEY,
@@ -22,8 +26,22 @@ class OpenAIService(BaseLLM):
                 model=OPENAI_MODEL,
                 input=prompt,
                 tools=tools,
-        )
-            return response
+            )
+            tool_calls = []
+            for item in response.output:
+                if item.type == "function_call":
+                    tool_calls.append(
+                    ToolCall(
+                        name = item.name,
+                        arguments = json.loads(item.arguments),
+                        call_id = item.call_id,
+                )
+            )
+            return LLMResponse(
+                text = response.output_text,
+                tool_calls = tool_calls,
+                response_id = response.id,
+            )
         except Exception as e:
             raise RuntimeError(
                 f"Erro ao consultar OpenAI:{e}"
@@ -32,17 +50,21 @@ class OpenAIService(BaseLLM):
     def submit_tool_result(
             self,
             previous_response_id: str,
-            call_id: str,
-            output: str,
+            tool_call_id: str,
+            tool_output: str,
         ):
-        return self.client.responses.create(
+        response = self.client.responses.create(
             model=OPENAI_MODEL,
             previous_response_id=previous_response_id,
             input=[
                 {
                     "type": "function_call_output",
-                    "call_id": call_id,
-                    "output": output,
+                    "call_id": tool_call_id,
+                    "output": tool_output,
                 }
             ],
+        )
+        return LLMResponse(
+            text = response.output_text,
+            response_id = response.id
         )

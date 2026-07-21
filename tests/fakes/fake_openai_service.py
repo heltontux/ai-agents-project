@@ -1,3 +1,8 @@
-class FakeOpenAIService:
+from core.base_llm import BaseLLM
+from core.llm_response import LLMResponse
+
+class FakeOpenAIService(BaseLLM):
     def generate(self, prompt):
-        return "Teste de Fake OPENAI"
+        return LLMResponse(
+            text = "Resposta Fake"
+        )
