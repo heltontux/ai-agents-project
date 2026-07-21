@@ -1,6 +1,7 @@
 from openai import OpenAI
 from tools.registry import ToolRegistry
 from tools.datetime_tool import DateTimeTool
+from core.base_llm import BaseLLM
 
 from config.settings import (
         OPENAI_API_KEY,
@@ -10,7 +11,7 @@ from config.settings import (
 registry = ToolRegistry()
 registry.register(DateTimeTool())
 
-class OpenAIService:
+class OpenAIService(BaseLLM):
     def __init__(self):
         self.client = OpenAI(api_key=OPENAI_API_KEY)
 
