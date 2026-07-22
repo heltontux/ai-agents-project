@@ -20,3 +20,4 @@ class SimpleAgent:
                 tool_call.call_id,
                 result,
             )
+        return response

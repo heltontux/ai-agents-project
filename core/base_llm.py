@@ -8,8 +8,8 @@ class BaseLLM(ABC):
 
     @abstractmethod
     def submit_tool_result(
-        self,
         previous_responde_id,
+        tool_call_id,
         tool_output,
     ):
         pass
