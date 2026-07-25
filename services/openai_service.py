@@ -44,11 +44,20 @@ class OpenAIService(BaseLLM):
                         call_id = item.call_id,
                 )
             )
-            return LLMResponse(
+            llm_response = LLMResponse(
                 text = response.output_text,
                 tool_calls = tool_calls,
                 response_id = response.id,
+                input_tokens=response.usage.input_tokens,
+                output_tokens=response.usage.output_tokens,
+                total_tokens=response.usage.total_tokens,
             )
+            Logger.info(f"Input Tokens:  {llm_response.input_tokens}")
+            Logger.info(f"Output Tokens: {llm_response.output_tokens}")
+            Logger.info(f"Total Tokens:  {llm_response.total_tokens}")
+            
+            return llm_response
+
         except Exception as e:
             raise RuntimeError(
                 f"Erro ao consultar OpenAI:{e}"
@@ -71,7 +80,15 @@ class OpenAIService(BaseLLM):
                 }
             ],
         )
-        return LLMResponse(
+        llm_response = LLMResponse(
             text = response.output_text,
-            response_id = response.id
+            response_id = response.id,
+            input_tokens=response.usage.input_tokens,
+            output_tokens=response.usage.output_tokens,
+            total_tokens=response.usage.total_tokens,
         )
+        Logger.info(f"Input Tokens:  {llm_response.input_tokens}")
+        Logger.info(f"Output Tokens: {llm_response.output_tokens}")
+        Logger.info(f"Total Tokens:  {llm_response.total_tokens}")
+
+        return llm_response

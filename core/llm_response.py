@@ -11,3 +11,6 @@ class LLMResponse:
         text: str = ""
         tool_calls: list[ToolCall] | None = None
         response_id: str | None = None
+        input_tokens: int = 0
+        output_tokens: int = 0
+        total_tokens: int = 0

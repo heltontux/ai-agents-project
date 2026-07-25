@@ -23,7 +23,7 @@ class SimpleAgent:
             Logger.info(
                 f"A Tool executou em {tool_end - tool_start:.3f}s"
             )
-            final_response = self.llm.submit_tool_result(
+            response = self.llm.submit_tool_result(
                 response.response_id,
                 tool_call.call_id,
                 result,
@@ -32,4 +32,4 @@ class SimpleAgent:
         Logger.info(
             f"Tempo total: {agent_end - agent_start:.3f}s"
         )
-        return final_response
+        return response
