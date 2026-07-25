@@ -1,4 +1,5 @@
 import json
+import time
 
 from openai import OpenAI
 from tools.registry import ToolRegistry
@@ -6,6 +7,7 @@ from tools.datetime_tool import DateTimeTool
 from core.base_llm import BaseLLM
 from core.llm_response import LLMResponse
 from core.llm_response import ToolCall
+from core.logger import Logger
 
 from config.settings import (
         OPENAI_API_KEY,
@@ -22,10 +24,15 @@ class OpenAIService(BaseLLM):
     def generate(self, prompt: str):
         try:
             tools=registry.schemas()
+            llm_start = time.perf_counter()
             response = self.client.responses.create(
                 model=OPENAI_MODEL,
                 input=prompt,
                 tools=tools,
+            )
+            llm_end = time.perf_counter()
+            Logger.info(
+                f"LLM respondeu em {llm_end - llm_start:.3f}s"
             )
             tool_calls = []
             for item in response.output:

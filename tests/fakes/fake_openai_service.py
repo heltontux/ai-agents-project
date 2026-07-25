@@ -1,5 +1,8 @@
+import time
+
 from core.base_llm import BaseLLM
 from core.llm_response import LLMResponse, ToolCall
+from core.logger import Logger
 
 class FakeOpenAIService(BaseLLM):
 
@@ -7,6 +10,11 @@ class FakeOpenAIService(BaseLLM):
         self.tool_result = None
 
     def generate(self, prompt):
+        llm_start = time.perf_counter()
+        llm_end = time.perf_counter()
+        Logger.info(
+            f"LLM respondeu em {llm_end - llm_start:.3f}s"
+        )
         return LLMResponse(
             tool_calls = [
                 ToolCall(
