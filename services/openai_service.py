@@ -8,6 +8,7 @@ from core.base_llm import BaseLLM
 from core.llm_response import LLMResponse
 from core.llm_response import ToolCall
 from core.logger import Logger
+from core.observability import Observability
 
 from config.settings import (
         OPENAI_API_KEY,
@@ -31,9 +32,9 @@ class OpenAIService(BaseLLM):
                 tools=tools,
             )
             llm_end = time.perf_counter()
-            Logger.info(
-                f"LLM respondeu em {llm_end - llm_start:.3f}s"
-            )
+
+            Observability.log_duration("LLM respondeu em", llm_end - llm_start)
+          
             tool_calls = []
             for item in response.output:
                 if item.type == "function_call":
@@ -44,7 +45,7 @@ class OpenAIService(BaseLLM):
                         call_id = item.call_id,
                 )
             )
-            llm_response = LLMResponse(
+            return LLMResponse(
                 text = response.output_text,
                 tool_calls = tool_calls,
                 response_id = response.id,
@@ -52,11 +53,6 @@ class OpenAIService(BaseLLM):
                 output_tokens=response.usage.output_tokens,
                 total_tokens=response.usage.total_tokens,
             )
-            Logger.info(f"Input Tokens:  {llm_response.input_tokens}")
-            Logger.info(f"Output Tokens: {llm_response.output_tokens}")
-            Logger.info(f"Total Tokens:  {llm_response.total_tokens}")
-            
-            return llm_response
 
         except Exception as e:
             raise RuntimeError(
@@ -80,15 +76,10 @@ class OpenAIService(BaseLLM):
                 }
             ],
         )
-        llm_response = LLMResponse(
+        return LLMResponse(
             text = response.output_text,
             response_id = response.id,
             input_tokens=response.usage.input_tokens,
             output_tokens=response.usage.output_tokens,
             total_tokens=response.usage.total_tokens,
         )
-        Logger.info(f"Input Tokens:  {llm_response.input_tokens}")
-        Logger.info(f"Output Tokens: {llm_response.output_tokens}")
-        Logger.info(f"Total Tokens:  {llm_response.total_tokens}")
-
-        return llm_response
