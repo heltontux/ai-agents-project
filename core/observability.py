@@ -17,7 +17,7 @@ class Observability:
     @staticmethod
     def log_duration(name: str, duration: float):
         Logger.info(
-            f"{name}: {duration}s"
+            f"{name}: {duration:.3f}s"
         )
 
     @staticmethod

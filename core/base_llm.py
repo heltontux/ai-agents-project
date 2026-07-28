@@ -8,7 +8,7 @@ class BaseLLM(ABC):
 
     @abstractmethod
     def submit_tool_result(
-        previous_responde_id,
+        previous_response_id,
         tool_call_id,
         tool_output,
     ):

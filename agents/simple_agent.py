@@ -1,7 +1,5 @@
-import json
 import time
 
-from core.logger import Logger
 from core.observability import Observability
 
 class SimpleAgent:

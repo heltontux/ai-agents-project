@@ -7,7 +7,6 @@ from tools.datetime_tool import DateTimeTool
 from core.base_llm import BaseLLM
 from core.llm_response import LLMResponse
 from core.llm_response import ToolCall
-from core.logger import Logger
 from core.observability import Observability
 
 from config.settings import (
@@ -57,7 +56,7 @@ class OpenAIService(BaseLLM):
         except Exception as e:
             raise RuntimeError(
                 f"Erro ao consultar OpenAI:{e}"
-            )
+            ) from e
         
     def submit_tool_result(
             self,
