@@ -285,3 +285,9 @@ If you'd like to improve the project:
 4. Open a Pull Request
 
 Please follow the project's coding style and keep the architecture clean and modular.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE.txt) file for details.
