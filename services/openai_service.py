@@ -8,6 +8,7 @@ from core.base_llm import BaseLLM
 from core.llm_response import LLMResponse
 from core.llm_response import ToolCall
 from core.observability import Observability
+from core.message import Message
 
 from config.settings import (
         OPENAI_API_KEY,
@@ -21,13 +22,25 @@ class OpenAIService(BaseLLM):
     def __init__(self):
         self.client = OpenAI(api_key=OPENAI_API_KEY)
 
-    def generate(self, prompt: str):
+    def _to_openai_messages(
+            self, 
+            messages: list[Message]
+            ) -> list[dict]:
+        return  [
+                    {
+                        "role": message.role.value,
+                        "content": message.content
+                    }
+                    for message in messages
+                ]
+
+    def generate(self, messages: list[Message]) -> LLMResponse:
         try:
             tools=registry.schemas()
             llm_start = time.perf_counter()
             response = self.client.responses.create(
                 model=OPENAI_MODEL,
-                input=prompt,
+                input=self._to_openai_messages(messages),
                 tools=tools,
             )
             llm_end = time.perf_counter()
