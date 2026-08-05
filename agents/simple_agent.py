@@ -1,7 +1,6 @@
 import time
 
 from core.observability import Observability
-from core.message import Message, Role
 
 class SimpleAgent:
 
@@ -11,11 +10,9 @@ class SimpleAgent:
         self.memory = memory
 
     def run(self, prompt: str):
-        self.memory.add(
-            Message(role=Role.USER, 
-                    content=prompt
-            )
-        )
+
+        self.memory.add_user(prompt)
+        
         messages = self.memory.get()
 
         agent_start = time.perf_counter()
@@ -40,22 +37,13 @@ class SimpleAgent:
                 tool_call.call_id,
                 result,
             )
-            self.memory.add(
-                Message(
-                    role=Role.ASSISTANT,
-                    content=response.text,
-                )
-            )
+
+            self.memory.add_assistant(response.text)
 
         agent_end = time.perf_counter()
 
         Observability.log_duration("Tempo total", agent_end - agent_start)
 
-        self.memory.add(
-            Message(
-                role=Role.ASSISTANT,
-                content=response.text,
-            )
-        )
+        self.memory.add_assistant(response.text)
 
         return response
