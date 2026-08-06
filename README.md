@@ -115,7 +115,8 @@ sequenceDiagram
 - Fake LLM for testing 
 - Automated tests with pytest 
 - Execution observability 
-- Token usage metrics 
+- Token usage metrics
+- Short-term memory
 
 ## 🛠️ Tech Stack
 
@@ -145,9 +146,10 @@ Current module:
 - ✅ Tool Calling
 - ✅ Testing
 - ✅ Observability
+- ✅ Memory
 
 Upcoming:
-- 🔜 Memory
+- 🔜 ~~Memory~~
 - 🔜 RAG
 - 🔜 Planner
 - 🔜 Multi-Agent
@@ -161,6 +163,28 @@ Upcoming:
 - Git
 - uv (recommended)
 
+### Installing requirements
+
+Install Python and uv (if not already installed)
+#### Windows (PowerShell)
+```bash
+winget install Python
+python --version
+```
+```bash
+winget install --id=astral-sh.uv -e
+uv --version
+```
+#### Linux (Debian derivatives)
+```bash
+apt install python3
+python3 --version
+```
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv --version
+```
 ### Clone the repository
 
 ```bash
@@ -168,27 +192,49 @@ git clone https://github.com/heltontux/ai-agents-project.git
 
 cd ai-agents-project
 ```
-
-### Install dependencies
+### Download the dependencies
 
 ```bash
 uv sync
 ```
+```bash
+uv add pytest
+```
 
 ### Configure environment variables
 
-Create a `.env` file in the project root.
+Create a `.env` file in the project root and insert the LLM API key.
 
 ```env
 OPENAI_API_KEY=your_api_key
 OPENAI_MODEL=gpt-5.5
 ```
+## ✅ Running Tests
+
+Execute all automated tests:
+
+```bash
+uv run pytest -v
+```
+Current test coverage includes:
+
+- Tool implementations
+- Tool Registry
+- Agent orchestration
+- Fake LLM
+- Dependency injection
+
+
 ## ▶️ Running
 
 Start the application with:
 
 ```bash
 uv run python -m app.main
+```
+Windows runs uv as a Python module. If you can't use uv directly, do the following:
+```bash
+python -m uv run python -m app.main
 ```
 
 Example:
@@ -204,27 +250,6 @@ Total Tokens: 1359
 
 TuxBot: It is currently 15:09.
 ```
-## ✅ Running Tests
-
-Execute all automated tests:
-
-```bash
-uv run pytest
-```
-
-Verbose mode:
-
-```bash
-uv run pytest -v
-```
-
-Current test coverage includes:
-
-- Tool implementations
-- Tool Registry
-- Agent orchestration
-- Fake LLM
-- Dependency injection
 
 ## 🗺️ Roadmap
 
