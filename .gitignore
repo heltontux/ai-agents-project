@@ -10,5 +10,6 @@ wheels/
 .venv
 
 # Criado manualmente
-criarDiretorios.sh
+criaDiretorios.sh
 .env
+.idea/
