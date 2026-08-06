@@ -10,6 +10,7 @@ def test_simple_agent_executes_tool():
     memory = InMemory()
 
     llm = FakeOpenAIService()
+    llm.simulate_tool_call = True
     agent = SimpleAgent(llm=llm, registry=registry, memory=memory)
 
     response = agent.run("Que horas são?")
