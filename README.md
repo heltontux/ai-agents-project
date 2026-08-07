@@ -117,6 +117,7 @@ sequenceDiagram
 - Execution observability 
 - Token usage metrics
 - Short-term memory
+- Sliding window memory
 
 ## 🛠️ Tech Stack
 

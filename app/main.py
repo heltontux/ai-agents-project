@@ -3,7 +3,8 @@ from services.openai_service import OpenAIService
 from tools.registry import ToolRegistry
 from tools.datetime_tool import DateTimeTool
 from agents.simple_agent import SimpleAgent
-from memory.in_memory import InMemory
+#from memory.in_memory import InMemory
+from memory.sliding_window import SlidingWindow
 
 llm = OpenAIService()
 #llm = FakeOpenAIService()
@@ -11,7 +12,8 @@ llm = OpenAIService()
 registry = ToolRegistry()
 registry.register(DateTimeTool())
 
-memory = InMemory()
+#memory = InMemory()
+memory = SlidingWindow(max_messages=4)
 
 agent = SimpleAgent(llm, registry, memory)
 
@@ -23,4 +25,6 @@ while True:
 
     print()
     print("TuxBot: ",response.text)
-    print()
+    print("=" * 20)
+    print("Histórico de mensagens:")
+    print(memory.get())
