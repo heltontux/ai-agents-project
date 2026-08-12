@@ -1,21 +1,17 @@
 from services.openai_service import OpenAIService
-#from tests.fakes.fake_openai_service import FakeOpenAIService
 from tools.registry import ToolRegistry
 from tools.datetime_tool import DateTimeTool
 from agents.simple_agent import SimpleAgent
-#from memory.in_memory import InMemory
-from memory.sliding_window import SlidingWindow
+from memory.summary_memory import SummaryMemory
+from services.llm_summarizer import LLMSummarizer
 
 llm = OpenAIService()
-#llm = FakeOpenAIService()
-
 registry = ToolRegistry()
 registry.register(DateTimeTool())
+memory = SummaryMemory(max_messages=10)
+summarizer = LLMSummarizer(llm)
 
-#memory = InMemory()
-memory = SlidingWindow(max_messages=4)
-
-agent = SimpleAgent(llm, registry, memory)
+agent = SimpleAgent(llm, registry, memory, summarizer)
 
 while True:
     prompt = input("Eu: ")

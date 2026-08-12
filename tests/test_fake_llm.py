@@ -1,4 +1,5 @@
 from memory.in_memory import InMemory
+from services.llm_summarizer import LLMSummarizer
 from tests.fakes.fake_openai_service import FakeOpenAIService
 from agents.simple_agent import SimpleAgent
 from tools.registry import ToolRegistry
@@ -8,7 +9,9 @@ def test_fake_llm_integration():
     memory = InMemory()
     fake_llm = FakeOpenAIService()
     registry = ToolRegistry()
-    agent = SimpleAgent(llm=fake_llm, registry=registry, memory=memory)
+    summarizer = LLMSummarizer(llm=fake_llm)
+
+    agent = SimpleAgent(llm=fake_llm, registry=registry, memory=memory, summarizer=summarizer)
 
     agent.run("Olá")
 
