@@ -275,6 +275,7 @@ TuxBot: It is currently 15:09.
 - Conversation History
 - Short-Term Memory
 - Context Window Management
+- Summary memory
 
 ### Module 4 — RAG
 
