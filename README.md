@@ -148,13 +148,14 @@ Current module:
 - ✅ Testing
 - ✅ Observability
 - ✅ Memory
+- ✅ MCP (Model Context Protocol)
 
 Upcoming:
 - 🔜 ~~Memory~~
 - 🔜 RAG
 - 🔜 Planner
 - 🔜 Multi-Agent
-- 🔜 MCP
+- 🔜 ~~MCP~~
 
 ## 📦 Installation
 
