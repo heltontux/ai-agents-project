@@ -13,3 +13,4 @@ wheels/
 criaDiretorios.sh
 .env
 .idea/
+Pipfile
